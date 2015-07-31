@@ -1,11 +1,13 @@
-def solver(num)
-  return num * num if is_palindromic((num * num).to_s)
-  return num * (num-1) if is_palindromic((num * (num-1)).to_s)
-  solver(num-1)
+def solver(ori, i, arr)
+  return arr.max if ori == i
+  ((ori - i)..ori).each do |iter|
+    arr << (ori - i) * iter if is_palindromic(((ori - i) * iter).to_s)
+  end
+  solver(ori, i+1, arr)
 end
 
 def is_palindromic(s)
   s[0...(s.length.to_f / 2).ceil] == s[s.length / 2..-1].reverse
 end
 
-puts solver(999)
+puts solver(999, 1, [])
